@@ -1,15 +1,17 @@
 #!/bin/bash
 
+bash start_kafka.sh
+
 echo "Ensuring topic exists..."
 bash create_topic.sh
 
 echo "Starting Fraud Streaming Pipeline..."
 
-echo "Starting Consumer..."
-docker exec  python-app python3 consumer.py &
+hive -f hivetable_creation.hive
 
-sleep 2
+echo "Starting Consumer..."
+gnome-terminal -- sh -c " PYSPARK_DRIVER_PYTHON=python3 spark-submit   --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.5   kafka_to_hive.py; exec bash"
 
 echo "Starting Producer..."
-docker exec  python-app python3 producer.py
+gnome-terminal -- sh -c "python3 producer.py; exec bash"
 

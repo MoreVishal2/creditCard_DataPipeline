@@ -1,0 +1,13 @@
+CREATE DATABASE IF NOT EXISTS fraud_db;
+USE fraud_db;
+
+CREATE EXTERNAL TABLE IF NOT EXISTS fraud_transactions (
+    Time DOUBLE,
+    Amount DOUBLE,
+    Class INT,
+    raw_data STRING
+)
+STORED AS PARQUET
+LOCATION '/data/fraud/bronze/'
+;
+
