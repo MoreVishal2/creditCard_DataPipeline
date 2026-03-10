@@ -25,7 +25,7 @@ for current_time, group in df.groupby('Time'):
 
     # send all transactions of this second together
     for _, row in group.iterrows():
-        producer.send('fraud_topic', value=row.to_dict())
+        producer.send('fraudTopic', value=row.to_dict())
 
     print(f"Sent {len(group)} transactions at time {current_time}")
 
